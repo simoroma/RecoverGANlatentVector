@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# This script is a slightly modified version of
+# https://gist.github.com/matpalm/23dc5804c6d673b800093d0d15e5de0e
+# By Mat Kelcey https://twitter.com/mat_kelcey
+
 # Given a specific latent vector saved in a
 # numpy array and a random latent vector
 # the GAN generates their corresponding images
