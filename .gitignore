@@ -1,3 +1,4 @@
 .idea/
 *.png
 *.npy
+!recover_z.png
