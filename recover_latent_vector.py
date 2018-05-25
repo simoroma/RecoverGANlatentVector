@@ -45,14 +45,14 @@ global_step = tf.Variable(0, trainable=False)
 starter_learning_rate = 0.99
 learning_rate = tf.train.exponential_decay(starter_learning_rate,
                                            global_step,
-                                           1000, 0.03)
+                                           10000, 0.005)
 opt = tf.train.GradientDescentOptimizer(learning_rate)
 # Optimize on the variable zp
 train = opt.minimize(loss, var_list=zp, global_step=global_step)
 
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
-for i in range(100):
+for i in range(200): # Use more iterations (10000)
   # If we know the original latent vector, we can also compute
   # how far the recovered vector is from it
   _, loss_value, zp_val, eta = sess.run((train, loss, zp, learning_rate))
