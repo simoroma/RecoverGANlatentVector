@@ -12,6 +12,7 @@
 # - a starting image, ./interpolation_from_start/foo_00.png
 # - its latent vector (optional) ./interpolation_from_start/zp_start.npy
 
+import os
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
@@ -35,8 +36,13 @@ fz = tf.Variable(start_img_np, tf.float32)
 fz = tf.expand_dims(fz, 0)
 fz = tf.cast(fz,tf.float32)
 
+# Choose a directory for which you have privileges
+# where you download the tfhub model
+print('Downloading the model.')
+os.environ['TFHUB_CACHE_DIR'] = 'D:/NeuralNetworks/ProGAN'
+generator = hub.Module("http://tfhub.dev/google/progan-128/1")
+print('Model downloaded.')
 # Define the optimization problem
-generator = hub.Module("https://tfhub.dev/google/progan-128/1")
 fzp = generator(zp)
 loss = tf.losses.mean_squared_error(labels=fz, predictions=fzp)
 
