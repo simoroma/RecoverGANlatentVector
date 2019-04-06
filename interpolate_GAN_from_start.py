@@ -13,7 +13,7 @@
 # It requires:
 # - the starting latent vector ./interpolation_from_start/z_00.npy
 
-
+import os
 from PIL import Image
 import numpy as np
 import tensorflow as tf
@@ -28,8 +28,14 @@ z = np.empty((STEPS, 512))
 for i, alpha in enumerate(np.linspace(start=0.0, stop=1.0, num=STEPS)):
   z[i] = (1 - alpha) * pt_a + alpha * pt_b
 
+# Choose a directory for which you have privileges
+# where you download the tfhub model
+print('Downloading the model.')
+os.environ['TFHUB_CACHE_DIR'] = 'D:/NeuralNetworks/ProGAN'
+generator = hub.Module("http://tfhub.dev/google/progan-128/1")
+print('Model downloaded.')
+
 # sample all z and write out as separate images.
-generator = hub.Module("https://tfhub.dev/google/progan-128/1")
 with tf.Session() as sess:
   sess.run(tf.global_variables_initializer())
   imgs = sess.run(generator(z))
